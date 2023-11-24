@@ -2,7 +2,10 @@ const express = require('express');
 const controllers = require('../../controllers/contactsControllers');
 
 const { validateBody, isValidId, authenticate } = require('../../middlewares');
-const { schemas } = require('../../models/contact');
+const {
+  createContactValidationSchema,
+  updateContactValidationSchema,
+} = require('../../utils/validation/userValidationSchemas');
 
 const router = express.Router();
 
@@ -13,7 +16,7 @@ router.get('/:contactId', isValidId, authenticate, controllers.getById);
 router.post(
   '/',
   authenticate,
-  validateBody(schemas.createContactValidationSchema),
+  validateBody(createContactValidationSchema),
   controllers.add
 );
 
@@ -21,7 +24,7 @@ router.put(
   '/:contactId',
   isValidId,
   authenticate,
-  validateBody(schemas.updateContactValidationSchema),
+  validateBody(updateContactValidationSchema),
   controllers.updateById
 );
 
