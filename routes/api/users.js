@@ -5,11 +5,19 @@ const {
   registerSchema,
   loginSchema,
   updateSubscriptionSchema,
+  resendEmailVerifySchema,
 } = require('../../utils/validation/authValidationSchemas');
 
 const router = express.Router();
 
 router.post('/register', validateBody(registerSchema), controllers.register);
+router.get('/verify/:verifyToken', controllers.verifyEmail);
+
+router.post(
+  '/verify',
+  validateBody(resendEmailVerifySchema),
+  controllers.resendEmailVerify
+);
 
 router.post('/login', validateBody(loginSchema), controllers.login);
 
